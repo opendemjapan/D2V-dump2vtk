@@ -151,17 +151,5 @@ GUI は **3 タブ構成**です（下のスクリーンショット参照）。
 
 ---
 
-## 8. 引用 / Citation（任意）
-
-本ツールが研究等に役立った場合は、以下のように引用してください。
-
-```bibtex
-@software{dump2vtk,
-  title  = {dump2vtk: GUI+CLI tool for LIGGGHTS/LAMMPS dump to VTK/VTU},
-  author = {dump2vtk contributors},
-  year   = {2025},
-  url    = {https://github.com/YOUR_ORG/dump2vtk}
-}
-```
 
 `YOUR_ORG` をあなたの GitHub ネームスペースに置き換えてください。
