@@ -1,55 +1,55 @@
-# dump2vtk（日本語）
+# dump2vtk (English)
 
-LIGGGHTS/LAMMPS の dump を **VTK/VTU** に高速変換する単一ファイル **GUI + CLI** ツールです。  
-粒子ダンプ、pair/local（force chain）ダンプ、ヘッダー置換を 1 本で扱えます。
+A single-file **GUI + CLI** tool (PySide6) to quickly convert LIGGGHTS/LAMMPS dumps to **VTK/VTU**.  
+It supports **particle dumps**, **pair/local (force chain) dumps**, and a **header replacer** in one script.
 
-- 主な特徴: 並列処理・チャンク処理、force chain の **ストリーミング読込**、自動連番収集（数字が末尾でなく**中間**でも検出）、**Louvain** によるコミュニティ検出と**コミュニティ集約**。
-- 必要最小依存: `numpy`（GUI は `PySide6`、任意で `vtk` / `networkx` / `python-louvain`）。
-- 英語版: [README_en.md](./README_en.md) ／ ライセンス: [LICENCE](./LICENCE)
+- Highlights: multiprocessing & chunking, **streaming** read for force chains, auto-collection of numbered siblings (digits can appear in the **middle**), **Louvain** community detection and **community aggregates**.
+- Minimal dependencies: `numpy` (GUI uses `PySide6`; optional: `vtk` / `networkx` / `python-louvain`).
+- License: see [LICENCE](./LICENCE).
 
 ---
 
-## 1. Python の実行方法
+## 1. How to run with Python
 
-### 1.1 動作環境
-- Python **3.8 以上**（推奨: 3.10+）
+### 1.1 Environment
+- Python **3.8+** (recommended: 3.10 or newer)
 
-### 1.2 インストール
+### 1.2 Installation
 ```bash
-# 最小構成
+# minimal
 pip install numpy
 
-# GUI を使う場合
+# for the GUI
 pip install PySide6
 
-# オプション機能（任意）
+# optional features
 pip install vtk networkx python-louvain
 ```
 
-### 1.3 起動（GUI）
+### 1.3 Start the GUI
 ```bash
 python dump2vtk.py
 ```
-- GUI が起動します。ドラッグ＆ドロップでファイル追加、詳細設定は **Advanced** から。
+- The GUI launches. Drag & drop files into the list and configure **Advanced** options as needed.
 
-### 1.4 起動（CLI）
-3 つのサブコマンドを使用できます。各 OS で共通に `python dump2vtk.py ...` としてください。
+### 1.4 Run from the CLI
+Three subcommands are available. Use `python dump2vtk.py ...` on all OSes.
 
-**(a) 粒子 Dump → VTK（VTK legacy / python-vtk）**
+**(a) Particles dump → VTK (legacy / python-vtk)**  
 ```bash
 python dump2vtk.py lpp DUMP_FILES... \
   -o OUTROOT --format {ascii|binary} \
   --cpunum N --chunksize K --no-overwrite
 ```
 
-**(b) ヘッダー置換（`ITEM: ENTRIES ...`）**
+**(b) Header replacement (`ITEM: ENTRIES ...`)**  
 ```bash
 python dump2vtk.py rename \
   -H "ITEM: ENTRIES x1 y1 z1 x2 y2 z2 id1 id2 periodic fx fy fz Fnx Fny Fnz Ftx Fty Ftz" \
   inputs*.dump --inplace
 ```
 
-**(c) force chain → VTK/VTU（Louvain + 集約）**
+**(c) Force chain → VTK/VTU (Louvain + aggregates)**  
 ```bash
 python dump2vtk.py force forcechain-*.dump \
   --vtk-format {vtk|vtu} --encoding {ascii|binary} --keep-periodic \
@@ -60,96 +60,108 @@ python dump2vtk.py force forcechain-*.dump \
 
 ---
 
-## 2. GUI の使い方
+## 2. GUI usage
 
-GUI は **3 タブ構成**です（下のスクリーンショット参照）。
+The GUI has **three tabs** (see screenshots below).
 
 ### 2.1 Particles: Dump → VTK
 
-![Particles タブ（連番自動収集と並列変換）](1.png)
+![Particles tab — auto-collect series & parallel conversion](1.png)
 
-1. 左のリストへ dump を **1 つドラッグ＆ドロップ**します。  
-   同名プレフィクスの**連番ファイルを自動収集**します（数字の位置は末尾でも中間でも可）。
-2. 右上の **出力先フォルダ**を必要に応じて指定します（空欄時は入力と同じ場所）。
-3. **Advanced settings** では **ASCII/BINARY**，並列数，チャンクサイズ，`--no-overwrite`（既存スキップ）を設定します。  
-   *補足*: writer backend は **legacy（純 Python）** と **vtk（python-vtk バインディング）** を切替可能です。
-4. **Export VTK** を押します。進捗バーとログに  
-   `Start: particle VTK (parallel)... Done.` と表示されれば成功です。
+1. Drag & drop **one** dump file into the list on the left.  
+   The app **auto-collects numbered siblings** sharing the same prefix (digits can be at the end or **in the middle**).
+2. Optionally set the **output folder** at the top-right (blank = same as input).
+3. In **Advanced settings**, choose **ASCII/BINARY**, CPU count, chunk size, and `--no-overwrite` (skip existing outputs).  
+   *Note*: You can switch the writer backend between **legacy (pure Python)** and **vtk (python-vtk bindings)**.
+4. Click **Export VTK**. If the log shows  
+   `Start: particle VTK (parallel)... Done.` the conversion succeeded.
 
 ---
 
-### 2.2 Header Replace: ヘッダー置換
+### 2.2 Header Replace: replace `ITEM: ENTRIES ...`
 
-![Header Replace タブ（ITEM: ENTRIES ... の一括置換）](2.png)
+![Header Replace tab — bulk replacement of ITEM: ENTRIES ...](2.png)
 
-1. pair/local 形式の dump（例: `fc0.dump, fc2000.dump, ...`）を投入します。  
-   WSL パス（`\\wsl.localhost\...`）も扱えます。
-2. **Replacement header** に以下の 1 行を入力します。  
+1. Drop pair/local-style dumps (e.g., `fc0.dump, fc2000.dump, ...`).  
+   WSL paths like `\\wsl.localhost\...` are supported.
+2. Enter the following one-line header in **Replacement header**:  
    ```text
    ITEM: ENTRIES x1 y1 z1 x2 y2 z2 id1 id2 periodic fx fy fz Fnx Fny Fnz Ftx Fty Ftz
    ```
-3. **Apply header replacement** を押します。各ファイルが `-renamed.dump` として複製されます。
+3. Click **Apply header replacement**. Each file is duplicated as `*-renamed.dump`.
 
 ---
 
-### 2.3 Force chain: フォースネットワーク（VTK/VTU 出力）
+### 2.3 Force chain: force network (VTK/VTU output)
 
-![Force chain タブ（バッチ処理と Louvain 集約）](3.png)
+![Force chain tab — batch processing with Louvain aggregates](3.png)
 
-1. `*-renamed.dump` を **1 つ選ぶ**と、同プレフィクスの**連番**を自動収集します。
-2. **Export network** を押します。各ステップの **VTK/VTU** を出力します。  
-   ログに `Start: force chain batch (parallel)... All done.` が表示されれば完了です。
-
----
-
-## 3. VTK の出力例（ParaView）
-
-出力ファイルの表示例です。
-
-![VTKファイル（粒子）の表示例](particle.png)  
-*図: 粒子（VTK POLYDATA）*
-
-![VTKファイル（force chain）の表示例](force_chain.png)  
-*図: フォースネットワーク（線分）*
-
-![VTKファイル（Louvain 法による力のネットワーク）の表示例](louvain.png)  
-*図: Louvain によるコミュニティ彩色*
+1. Select **one** `*-renamed.dump`; the app **auto-collects** its numbered siblings.
+2. Click **Export network**. A **VTK/VTU** file is written per timestep.  
+   When the log shows `Start: force chain batch (parallel)... All done.` the batch has finished.
 
 ---
 
-## 4. I/O の要点
+## 3. VTK examples (ParaView)
 
-- **粒子ダンプ**: `x/y/z` と `xs/ys/zs` を自動判定し、必要に応じて **unscale**。`...x/..y/...z` や `f_*/c_*/v_*[1..3]` は **ベクトル**として扱い、その他は **スカラー**として書き出します。  
-  legacy VTK では `POINTS`・`VERTICES`・`POINT_DATA` に加え、各ステップの **バウンディングボックス**（RECTILINEAR_GRID）も出力します。python-vtk バックエンドでも同様の幾何を生成します。
-- **force chain**: `ENTRIES` に **12 必須列**（`x1 y1 z1 x2 y2 z2 id1 id2 periodic fx fy fz`）を想定。任意列はスカラー/ベクトルとして自動検出します。  
-  エッジは `(id1, id2)` で生成し、`force = ||(fx,fy,fz)||`、`connectionLength` を計算します。**Louvain** で `community` / `intra_comm` を付与し、`--write-pointdata` でノード側 `node_community`・`node_degree`・`node_force_sum` を出力可能。さらに各属性の**コミュニティ mean/sum** を縁に展開します。
+Examples of the output files in ParaView.
 
----
+![VTK example — particles](particle.png)  
+*Particles (VTK POLYDATA)*
 
-## 5. 連番ファイルの自動収集
+![VTK example — force chain](force_chain.png)  
+*Force network (polyline edges)*
 
-- **prefix + digits + suffix + extension（.gz 対応）** の規則で、**1 ファイル投入だけで姉妹ファイル**を探索します。  
-- 数字が **中間**にあるパターン（例: `forcechain-16000-renamed.dmp`）にも対応します。  
-- ワイルドカード（例: `forcechain-*.dmp`）指定も可。重複は自動で除去します。
+![VTK example — Louvain network](louvain.png)  
+*Louvain-colored force network*
 
 ---
 
-## 6. 謝辞 / Acknowledgments
+## 4. I/O essentials
 
-- ダンプ処理および VTK 出力の設計は **Pizza.py / LPP（LIGGGHTS post-processing）** の考え方を参考にしています。  
-- 例は **compaction_LIGGGHTS** を参照しました。作者とコミュニティに感謝します。
+- **Particle dumps**: detects `x/y/z` vs `xs/ys/zs` and **unscales** if needed. Consecutive `...x/..y/...z` and patterns like `f_*/c_*/v_*[1..3]` are treated as **vectors**; other columns become **scalars**.  
+  The legacy VTK writer outputs `POINTS`, `VERTICES`, and `POINT_DATA`, plus a per-snapshot **bounding box** (RECTILINEAR_GRID). The python-vtk backend produces equivalent geometry via VTK bindings.
+- **Force chain**: expects **12 required columns** in `ENTRIES`:  
+  `x1 y1 z1 x2 y2 z2 id1 id2 periodic fx fy fz`  
+  Additional columns are auto-detected as scalars/vectors. Edges come from `(id1, id2)`. Derived fields include `force = ||(fx, fy, fz)||` and `connectionLength`. **Louvain** adds `community` and `intra_comm`. With `--write-pointdata`, node-level `node_community`, `node_degree`, `node_force_sum` are included. For each attribute, **community mean/sum** is also emitted onto edges.
 
 ---
 
-## 7. ライセンス / License
+## 5. Auto-collection of numbered series
 
-本リポジトリは **Pizza.py/LPP 由来のコード**を含むため、配布全体としては **GPL-2.0** に基づきます。  
-同時に、本プロジェクトで新規に作成した部分は **MIT License** でも提供します（ただし GPL 由来部分を含む配布では **GPL-2.0** が優先）。
+- **prefix + digits + suffix + extension** (supports `.gz`): adding a single file will discover and include its **sibling files**.  
+- Works even when the digits are in the **middle** (e.g., `forcechain-16000-renamed.dmp`).  
+- Wildcards like `forcechain-*.dmp` are also supported; duplicates are removed automatically.
+
+---
+
+## 6. Acknowledgments
+
+- The design for dump handling and VTK output was inspired by **Pizza.py / LPP (LIGGGHTS post‑processing)**.  
+- Examples are adapted from **compaction_LIGGGHTS**. Many thanks to the authors and community.
+
+---
+
+## 7. License
+
+This repository includes code derived from **Pizza.py/LPP**, therefore the combined distribution is provided under **GPL‑2.0**.  
+All new/original parts authored for this project are additionally offered under the **MIT License**. When distributing with GPL‑covered parts, **GPL‑2.0** terms take precedence.
 
 - SPDX: `GPL-2.0-only AND MIT`  
-- 詳細は [`LICENCE`](./LICENCE) を参照してください。
+- See [`LICENCE`](./LICENCE) for details.
 
 ---
 
+## 8. Citation (optional)
 
-`YOUR_ORG` をあなたの GitHub ネームスペースに置き換えてください。
+If this tool is useful in your work, please cite:
+
+```bibtex
+@software{dump2vtk,
+  title  = {dump2vtk: GUI+CLI tool for LIGGGHTS/LAMMPS dump to VTK/VTU},
+  author = {dump2vtk contributors},
+  year   = {2025},
+  url    = {https://github.com/YOUR_ORG/dump2vtk}
+}
+```
+Replace `YOUR_ORG` with your GitHub namespace.
