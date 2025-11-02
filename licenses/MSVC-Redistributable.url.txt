@@ -1,0 +1,2 @@
+Microsoft Visual C++ Redistributable — License Terms:
+https://learn.microsoft.com/legal/

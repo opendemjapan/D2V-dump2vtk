@@ -1,0 +1,49 @@
+D2V / dump2vtk — License Notice for Installer (English)
+=======================================================
+
+Version: 1.0.0
+Date: 2025-11-02
+Project: D2V (dump2vtk.py — GUI+CLI converter for LIGGGHTS/LAMMPS dump workflows)
+Contact: <REPLACE_WITH_CONTACT_EMAIL>   ← please replace
+Corresponding Source: <REPLACE_WITH_SOURCE_CODE_URL>   ← required for GPL distribution
+
+1) License for this software (summary)
+--------------------------------------
+- The combined work (the “Combined Work”) is distributed under the **GNU GPL v2.0 or later (GPL-2.0-or-later)**.
+- This software is distributed **without any warranty**; without even the implied warranties of merchantability
+  or fitness for a particular purpose.
+- The location of the **Corresponding Source** is the URL shown above.
+- For the full license text, see `licenses/COPYING.GPL-2.0.txt` (or the official URL file placed under `licenses/`).
+  For offline distribution, it is recommended to include the full GPL text file.
+
+2) Reuse conditions for our own code
+------------------------------------
+- Files newly authored by us (not derived from Pizza.py) are **also reusable under the MIT License** when used on
+  their own. When distributed as part of the Combined Work, **GPL terms prevail**. See the `NOTICE` file for details.
+
+3) Main third-party components and licenses
+-------------------------------------------
+- **PySide6 (Qt for Python)** — LGPL-3.0 (dynamic linking assumed)
+  - You must provide the license text and a means for users to **relink against a modified library**.
+    Because “onefile” packaging can make replacement difficult, we **recommend onefolder packaging**.
+- **NumPy / NetworkX / VTK / python-louvain** — BSD 3-Clause
+- **Python runtime** — PSF License
+- **Microsoft Visual C++ Runtime** — subject to Microsoft’s redistributable terms
+- Example shipped with the product: **compaction_LIGGGHTS** — MIT (see the license included in its repository)
+
+  The license texts and attributions for these components are available under the installed `licenses/` directory.
+
+4) Important: complying with the LGPL (PySide6)
+-----------------------------------------------
+- This application uses PySide6. Distribution assumes **dynamic linking** or another arrangement that allows the user
+  to relink the application with a **modified** version of the library.
+- If you ship a “onefile” build, document a practical method for users to replace PySide6 at the runtime extraction
+  location so that **relinking with a modified library remains possible**; otherwise prefer a **onefolder** layout.
+
+5) Confirmation to proceed with installation
+--------------------------------------------
+- By clicking “Next”, you acknowledge that you have read the summary above, that the software is **provided as-is
+  without warranty**, and that the full texts of the relevant licenses are available under `licenses/` (or official
+  URLs are provided there).
+
+*This screen is a summary for convenience. If any inconsistency arises, the original license texts control.*

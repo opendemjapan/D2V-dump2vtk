@@ -1,0 +1,46 @@
+{
+  "third_party": [
+    {
+      "name": "NumPy",
+      "license": "BSD-3-Clause",
+      "file": "BSD-3-Clause.txt",
+      "home": "https://numpy.org/"
+    },
+    {
+      "name": "VTK (python-vtk)",
+      "license": "BSD-3-Clause",
+      "file": "BSD-3-Clause.txt",
+      "home": "https://vtk.org/"
+    },
+    {
+      "name": "NetworkX",
+      "license": "BSD-3-Clause",
+      "file": "BSD-3-Clause.txt",
+      "home": "https://networkx.org/"
+    },
+    {
+      "name": "python-louvain",
+      "license": "BSD-3-Clause",
+      "file": "BSD-3-Clause.txt",
+      "home": "https://github.com/taynaud/python-louvain"
+    },
+    {
+      "name": "PySide6 (Qt for Python)",
+      "license": "LGPL-3.0",
+      "file": "COPYING.LGPL-3.0.url.txt",
+      "home": "https://pypi.org/project/PySide6/"
+    },
+    {
+      "name": "Python (runtime)",
+      "license": "PSF-2.0",
+      "file": "PSF-LICENSE.url.txt",
+      "home": "https://www.python.org/"
+    },
+    {
+      "name": "compaction_LIGGGHTS (example)",
+      "license": "MIT",
+      "file": "compaction_LIGGGHTS-MIT.txt",
+      "home": "https://github.com/abhishekdbihani/compaction_LIGGGHTS"
+    }
+  ]
+}
