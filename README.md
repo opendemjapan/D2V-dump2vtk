@@ -15,9 +15,10 @@ The compiled version is distributed below.
   <a href="https://opendemjapan.booth.pm/items/7611221">
     <img
       alt="Free download: dump2vtk_installer.zip (156 MB)"
-      src="https://img.shields.io/badge/%E7%84%A1%E6%96%99%E3%83%80%E3%82%A6%E3%83%B3%E3%83%AD%E3%83%BC%E3%83%89-dump2vtk__installer.zip%20(156%20MB)-d32f2f?style=for-the-badge&logo=icloud&logoColor=white&labelColor=d32f2f">
+      src="https://img.shields.io/badge/free%20download-dump2vtk__installer.zip%20(156%20MB)-d32f2f?style=for-the-badge&logo=icloud&logoColor=white&labelColor=d32f2f">
   </a>
 </p>
+
 
 
 ---
