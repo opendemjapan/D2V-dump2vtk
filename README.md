@@ -152,16 +152,4 @@ All new/original parts authored for this project are additionally offered under 
 
 ---
 
-## 8. Citation (optional)
 
-If this tool is useful in your work, please cite:
-
-```bibtex
-@software{dump2vtk,
-  title  = {dump2vtk: GUI+CLI tool for LIGGGHTS/LAMMPS dump to VTK/VTU},
-  author = {dump2vtk contributors},
-  year   = {2025},
-  url    = {https://github.com/YOUR_ORG/dump2vtk}
-}
-```
-Replace `YOUR_ORG` with your GitHub namespace.
