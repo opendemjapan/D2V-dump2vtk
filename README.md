@@ -51,24 +51,24 @@ Three subcommands are available. Use `python dump2vtk.py ...` on all OSes.
 
 **(a) Particles dump → VTK (legacy / python-vtk)**  
 ```bash
-python dump2vtk.py lpp DUMP_FILES... \
-  -o OUTROOT --format {ascii|binary} \
+python dump2vtk.py lpp DUMP_FILES... `
+  -o OUTROOT --format {ascii|binary} `
   --cpunum N --chunksize K --no-overwrite
 ```
 
 **(b) Header replacement (`ITEM: ENTRIES ...`)**  
 ```bash
-python dump2vtk.py rename \
-  -H "ITEM: ENTRIES x1 y1 z1 x2 y2 z2 id1 id2 periodic fx fy fz Fnx Fny Fnz Ftx Fty Ftz" \
+python dump2vtk.py rename `
+  -H "ITEM: ENTRIES x1 y1 z1 x2 y2 z2 id1 id2 periodic fx fy fz Fnx Fny Fnz Ftx Fty Ftz" `
   inputs*.dump --inplace
 ```
 
 **(c) Force chain → VTK/VTU (Louvain + aggregates)**  
 ```bash
-python dump2vtk.py force forcechain-*.dump \
-  --vtk-format {vtk|vtu} --encoding {ascii|binary} --keep-periodic \
-  --resolution 1.0 --seed 42 --write-pointdata \
-  --outdir out/ --nan-fill 0.0 \
+python dump2vtk.py force forcechain-*.dump `
+  --vtk-format {vtk|vtu} --encoding {ascii|binary} --keep-periodic `
+  --resolution 1.0 --seed 42 --write-pointdata `
+  --outdir out/ --nan-fill 0.0 `
   --cpunum N --chunksize K --no-overwrite
 ```
 
