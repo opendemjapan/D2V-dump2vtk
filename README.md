@@ -139,6 +139,16 @@ Examples of the output files in ParaView.
   `x1 y1 z1 x2 y2 z2 id1 id2 periodic fx fy fz`  
   Additional columns are auto-detected as scalars/vectors. Edges come from `(id1, id2)`. Derived fields include `force = ||(fx, fy, fz)||` and `connectionLength`. **Louvain** adds `community` and `intra_comm`. With `--write-pointdata`, node-level `node_community`, `node_degree`, `node_force_sum` are included. For each attribute, **community mean/sum** is also emitted onto edges.
 
+<h2>About the error</h2>
+<p>You may see the following error:<br>
+  <code>[WinError 1455] The paging file is too small for this operation to complete.</code>
+</p>
+<p>This occurs when Windows reaches its commit limit (i.e., available memory including the paging file). It’s common in sandboxed or resource-restricted environments.</p>
+<p><strong>Workaround:</strong> Set both the number of parallel workers (CPUs) and the chunk size to <strong>1</strong>. This greatly reduces memory usage and usually prevents the error.</p>
+<!-- Optional:
+<p>CLI example: <code>dump2vtk.exe lpp input.dmp --cpunum 1 --chunksize 1</code></p>
+-->
+
 ---
 
 ## 5. Auto-collection of numbered series
